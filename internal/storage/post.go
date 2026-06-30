@@ -14,7 +14,7 @@ func NewPostRepository(db *sqlx.DB) *PostRepository {
 }
 
 func (r *PostRepository) GetAll() ([]model.Post, error) {
-	var posts []model.Post
+	posts := []model.Post{}
 	err := r.db.Select(&posts, "SELECT * FROM posts ORDER BY created_at DESC")
 	return posts, err
 }
