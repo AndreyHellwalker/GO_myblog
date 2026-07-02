@@ -23,7 +23,7 @@ func NewPostHandler(repo *storage.PostRepository) *PostHandler {
 // @Summary      Список постов
 // @Tags         posts
 // @Produce      json
-// @Success      200  {object}  Response
+// @Success      200  {object}  PostsResponse
 // @Router       /posts [get]
 func (h *PostHandler) List(w http.ResponseWriter, r *http.Request) {
 	posts, err := h.repo.GetAll()
@@ -39,7 +39,7 @@ func (h *PostHandler) List(w http.ResponseWriter, r *http.Request) {
 // @Tags         posts
 // @Produce      json
 // @Param        id   path      int  true  "ID поста"
-// @Success      200  {object}  Response
+// @Success      200  {object}  PostResponse
 // @Failure      404  {object}  Response
 // @Router       /posts/{id} [get]
 func (h *PostHandler) Show(w http.ResponseWriter, r *http.Request) {

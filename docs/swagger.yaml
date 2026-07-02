@@ -1,5 +1,21 @@
 basePath: /
 definitions:
+  handler.PostResponse:
+    properties:
+      data:
+        $ref: '#/definitions/model.Post'
+      error:
+        type: string
+    type: object
+  handler.PostsResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/model.Post'
+        type: array
+      error:
+        type: string
+    type: object
   handler.Response:
     properties:
       data: {}
@@ -34,7 +50,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handler.Response'
+            $ref: '#/definitions/handler.PostsResponse'
       summary: Список постов
       tags:
       - posts
@@ -72,7 +88,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handler.Response'
+            $ref: '#/definitions/handler.PostResponse'
         "404":
           description: Not Found
           schema:
