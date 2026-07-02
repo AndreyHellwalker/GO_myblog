@@ -5,13 +5,20 @@ import (
 	"net/http"
 	"os"
 
+	_ "github.com/AndreyHellwalker/GO_myblog/docs"
 	"github.com/AndreyHellwalker/GO_myblog/internal/handler"
 	"github.com/AndreyHellwalker/GO_myblog/internal/storage"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/cors"
 	"github.com/joho/godotenv"
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
+// @title           Hellwalker Blog API
+// @version         1.0
+// @description     Personal blog API
+// @host            hellwalker.online
+// @BasePath        /
 func main () {
 	godotenv.Load()
 
@@ -44,6 +51,7 @@ func main () {
 
 	r.Get("/posts", postHandler.List)
 	r.Get("/posts/{id}", postHandler.Show)
+	r.Get("/swagger/*", httpSwagger.WrapHandler)
 
 	r.Group(func(r chi.Router) {
 		r.Use(handler.AuthMiddleware(sessionRepo))

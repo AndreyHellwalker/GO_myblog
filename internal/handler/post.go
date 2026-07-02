@@ -20,6 +20,11 @@ func NewPostHandler(repo *storage.PostRepository) *PostHandler {
 	return &PostHandler{repo: repo}
 } 
 
+// @Summary      Список постов
+// @Tags         posts
+// @Produce      json
+// @Success      200  {object}  Response
+// @Router       /posts [get]
 func (h *PostHandler) List(w http.ResponseWriter, r *http.Request) {
 	posts, err := h.repo.GetAll()
 	if err != nil {
@@ -30,6 +35,13 @@ func (h *PostHandler) List(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, posts, http.StatusOK)
 }
 
+// @Summary      Получить пост
+// @Tags         posts
+// @Produce      json
+// @Param        id   path      int  true  "ID поста"
+// @Success      200  {object}  Response
+// @Failure      404  {object}  Response
+// @Router       /posts/{id} [get]
 func (h *PostHandler) Show(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(chi.URLParam(r, "id"))
 	if err != nil {
@@ -49,6 +61,13 @@ func (h *PostHandler) Show(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, post, http.StatusOK)
 }
 
+// @Summary      Создать пост
+// @Tags         posts
+// @Accept       json
+// @Produce      json
+// @Param        post  body      model.Post  true  "Данные поста"
+// @Success      201   {object}  Response
+// @Router       /posts [post]
 func (h* PostHandler) Create(w http.ResponseWriter, r *http.Request) {
 	var post model.Post
 	if err := json.NewDecoder(r.Body).Decode(&post); err != nil {

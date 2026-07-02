@@ -1,0 +1,83 @@
+basePath: /
+definitions:
+  handler.Response:
+    properties:
+      data: {}
+      error:
+        type: string
+    type: object
+  model.Post:
+    properties:
+      content:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: integer
+      imagePath:
+        type: string
+      title:
+        type: string
+    type: object
+host: hellwalker.online
+info:
+  contact: {}
+  description: Personal blog API
+  title: Hellwalker Blog API
+  version: "1.0"
+paths:
+  /posts:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+      summary: Список постов
+      tags:
+      - posts
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Данные поста
+        in: body
+        name: post
+        required: true
+        schema:
+          $ref: '#/definitions/model.Post'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/handler.Response'
+      summary: Создать пост
+      tags:
+      - posts
+  /posts/{id}:
+    get:
+      parameters:
+      - description: ID поста
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.Response'
+      summary: Получить пост
+      tags:
+      - posts
+swagger: "2.0"
